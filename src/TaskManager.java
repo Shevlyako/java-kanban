@@ -6,10 +6,7 @@ public class TaskManager {
     private final HashMap<Integer, Epic> epics = new HashMap<>();
     private static int id = 0;
 
-    public TaskManager() {
-    }
-
-    public static int getId() {
+    public static int getId() { //Счетчик тасок
         return id = id + 1;
     }
 
@@ -58,7 +55,7 @@ public class TaskManager {
             epics.remove(id);
         }
     }
-    public Task getTaskId(int id){
+    public Task getTaskId(int id){ //получаем таску по её id
         if(tasks.containsKey(id)){
             return tasks.get(id);
         } else if (subTasks.containsKey(id)) {
@@ -69,7 +66,44 @@ public class TaskManager {
         return null;
     }
 
-    public void updateTask(Task task){
+    public void updateTask(Task task){ //Обновляем таску
+        if(tasks.containsKey(task.getId())){
+            tasks.put(task.getId(), task);
+        }
+    }
 
+    public  void updateEpicStatus(int id){ //Метод для обновления статуса эпика при изменении статуса субтаски
+        int nev = 0;
+        int done = 0;
+        for (SubTask subTask:(epics.get(id).getSubTasks().values())){ //Проходимся по таскам эпика и считаем их статусы
+            if(subTask.getStatus() == TaskStatus.NEW) {
+                nev++;
+            }
+            if (subTask.getStatus() == TaskStatus.DONE) {
+                done++;
+            }
+        }
+        if (nev == epics.get(id).getSubTasks().size()){ //проверяем равны ли все таски новым
+            epics.get(id).setStatus(TaskStatus.NEW);
+        }else if (done == epics.get(id).getSubTasks().size()){ //проверяем равныли все таски выполненым
+            epics.get(id).setStatus(TaskStatus.DONE);
+        } else {
+            epics.get(id).setStatus(TaskStatus.IN_PROGRESS);
+        }
+    }
+    public void updateEpic(Epic epic){ //Обновление эпика
+        if(epics.containsKey(epic.getId())){
+            epics.put(epic.getId(), epic);
+        }
+    }
+    public void updateSubTask(SubTask subTask){ //Обновление субтаски
+        if(subTasks.containsKey(subTask.getId())){
+            subTasks.put(subTask.getId(), subTask);
+            Epic epic = (Epic) epics.get(subTask.getEpicId());
+            if (epic != null) { //Проверка эпика к которому пренадлежит таска на null
+                epic.addSubInEpic(subTask); //обновляем таску в мапе Эпика
+                updateEpicStatus(subTask.getEpicId()); //пересчитываем статус эпика к которому принадлежит таска
+            }
+        }
     }
 }
