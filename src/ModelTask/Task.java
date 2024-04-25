@@ -1,32 +1,18 @@
+package ModelTask;
+
+import Manager.TaskManager;
+
 import java.util.Objects;
 
 public class Task {
     private String name;
     private String description;
-    private final int id;
-    private TaskStatus status;
+    private int id;
+    private TaskStatus status = TaskStatus.NEW;
 
-    public Task(String name, String description, TaskStatus taskStatus) {
+    public Task(String name, String description) {
         this.name = name;
         this.description = description;
-        this.status = taskStatus;
-        id = TaskManager.getId();
-    }
-    public Task(String name, String description, TaskStatus taskStatus, int id){
-        this.name = name;
-        this.description = description;
-        this.status = taskStatus;
-        this.id = id;
-    }
-
-    @Override
-    public String toString() {
-        return "Task{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", status=" + status +
-                '}';
     }
 
     public String getName() {
@@ -53,6 +39,10 @@ public class Task {
         this.description = description;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public void setStatus(TaskStatus status) {
         this.status = status;
     }
@@ -69,4 +59,16 @@ public class Task {
     public int hashCode() {
         return Objects.hash(name, description, id);
     }
+
+    @Override
+    public String toString() {
+        return "ModelTask.Task{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", status=" + status +
+                '}';
+    }
+
+
 }

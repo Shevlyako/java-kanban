@@ -1,3 +1,5 @@
+package ModelTask;
+
 public enum TaskStatus {
     NEW,
     IN_PROGRESS,

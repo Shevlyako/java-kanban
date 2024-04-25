@@ -1,49 +1,51 @@
+import Manager.TaskManager;
+import ModelTask.*;
+
 public class Main {
 
     public static void main(String[] args) {
         System.out.println("Создание задач:");
         TaskManager taskManager = new TaskManager();
-        taskManager.addTask(new Task("Создать первую задачу", "Создать первую задачу", TaskStatus.NEW));
-        taskManager.addTask(new Task("Сдать ТЗ", "Выполнить задание ТЗ без ошибок и сдать на проверку"
-                , TaskStatus.NEW));
-        taskManager.addEpic(new Epic("Купить продукты", "Купить молоко и сыр", TaskStatus.NEW));
-        taskManager.addEpic(new Epic("Купить еду для собаки", "Купить роял", TaskStatus.NEW));
-        taskManager.addSubTask(new SubTask("Купить молоко", "Купить молоко", TaskStatus.NEW, 3));
-        taskManager.addSubTask(new SubTask("Купить сыр", "Купить сыр", TaskStatus.NEW, 3));
-        taskManager.addSubTask(new SubTask("Купить роял", "Купить роял", TaskStatus.NEW, 4));
-        System.out.println("Список Task:");
+        taskManager.addTask(new Task("Создать первую задачу", "Создать первую задачу"));
+        taskManager.addTask(new Task("Сдать ТЗ", "Выполнить задание ТЗ без ошибок и сдать на проверку"));
+        taskManager.addEpic(new Epic("Купить продукты", "Купить молоко и сыр"));
+        taskManager.addEpic(new Epic("Купить еду для собаки", "Купить роял"));
+        taskManager.addSubTask(new Subtask("Купить молоко", "Купить молоко", 3));
+        taskManager.addSubTask(new Subtask("Купить сыр", "Купить сыр", 3));
+        taskManager.addSubTask(new Subtask("Купить роял", "Купить роял", 4));
+        System.out.println("Список ModelTask.Task:");
         System.out.println(taskManager.getTasks());
-        System.out.println("Список Epic:");
+        System.out.println("Список ModelTask.Epic:");
         System.out.println(taskManager.getEpics());
-        System.out.println("Список SubTask:");
+        System.out.println("Список ModelTask.Subtask:");
         System.out.println(taskManager.getSubTasks());
         System.out.println();
 
         System.out.println("Обновление задач:");
-        taskManager.updateTask(new Task("Первая задача", "Создать задачу номер 1",
-                TaskStatus.IN_PROGRESS, 1));
-        taskManager.updateTask(new Task("Сдать ТЗ",
-                "Выполнить задание ТЗ без ошибок и сдать на проверку", TaskStatus.IN_PROGRESS, 2));
-        taskManager.updateSubTask(new SubTask("Купить молоко", "Купить молоко", TaskStatus.DONE,
-                5, 3));
-        taskManager.updateSubTask(new SubTask("Купить роял", "Купить роял", TaskStatus.DONE,
-                7, 4));
-        System.out.println("Список Task:");
+        taskManager.getTaskId(1).setStatus(TaskStatus.IN_PROGRESS);
+        taskManager.updateTask(taskManager.getTaskId(1));
+        taskManager.getTaskId(2).setDescription("123");
+        taskManager.updateTask(taskManager.getTaskId(2));
+        taskManager.getSubtaskId(5).setStatus(TaskStatus.IN_PROGRESS);
+        taskManager.updateSubTask(taskManager.getSubtaskId(5));
+        taskManager.getSubtaskId(7).setStatus(TaskStatus.DONE);
+        taskManager.updateSubTask(taskManager.getSubtaskId(7));
+        System.out.println("Список ModelTask.Task:");
         System.out.println(taskManager.getTasks());
-        System.out.println("Список Epic:");
+        System.out.println("Список ModelTask.Epic:");
         System.out.println(taskManager.getEpics());
-        System.out.println("Список SubTask:");
+        System.out.println("Список ModelTask.Subtask:");
         System.out.println(taskManager.getSubTasks());
         System.out.println();
 
         System.out.println("Удаление задач:");
         taskManager.removeTask(1);
-        taskManager.removeTask(4);
-        System.out.println("Список Task:");
+        taskManager.removeSubtask(7);
+        System.out.println("Список ModelTask.Task:");
         System.out.println(taskManager.getTasks());
-        System.out.println("Список Epic:");
+        System.out.println("Список ModelTask.Epic:");
         System.out.println(taskManager.getEpics());
-        System.out.println("Список SubTask:");
+        System.out.println("Список ModelTask.Subtask:");
         System.out.println(taskManager.getSubTasks());
         System.out.println();
     }
