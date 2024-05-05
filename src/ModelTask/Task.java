@@ -1,7 +1,5 @@
 package ModelTask;
 
-import Manager.TaskManager;
-
 import java.util.Objects;
 
 public class Task {
@@ -13,6 +11,13 @@ public class Task {
     public Task(String name, String description) {
         this.name = name;
         this.description = description;
+    }
+
+    public Task(Task task){
+        this.name = task.name;
+        this.description = task.description;
+        this.id = task.id;
+        this.status = task.status;
     }
 
     public String getName() {

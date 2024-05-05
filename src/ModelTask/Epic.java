@@ -1,7 +1,6 @@
 package ModelTask;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class Epic extends Task {
@@ -12,7 +11,7 @@ public class Epic extends Task {
     }
 
     public void addSubInEpic(Subtask subtask) {
-        subTasksId.add(subtask.getId());
+            subTasksId.add(subtask.getId());
     }
 
     public ArrayList<Integer> getSubTasks() {

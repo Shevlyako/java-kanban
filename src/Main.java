@@ -1,18 +1,19 @@
-import Manager.TaskManager;
+import Manager.InMemoryTaskManager;
+import Manager.Managers;
 import ModelTask.*;
 
 public class Main {
 
     public static void main(String[] args) {
         System.out.println("Создание задач:");
-        TaskManager taskManager = new TaskManager();
+        InMemoryTaskManager taskManager = (InMemoryTaskManager) Managers.getDefault();
         taskManager.addTask(new Task("Создать первую задачу", "Создать первую задачу"));
         taskManager.addTask(new Task("Сдать ТЗ", "Выполнить задание ТЗ без ошибок и сдать на проверку"));
         taskManager.addEpic(new Epic("Купить продукты", "Купить молоко и сыр"));
         taskManager.addEpic(new Epic("Купить еду для собаки", "Купить роял"));
-        taskManager.addSubTask(new Subtask("Купить молоко", "Купить молоко", 3));
-        taskManager.addSubTask(new Subtask("Купить сыр", "Купить сыр", 3));
-        taskManager.addSubTask(new Subtask("Купить роял", "Купить роял", 4));
+        taskManager.addSubTask(new Subtask("Купить молоко", "Купить молоко", taskManager.getEpicId(3)));
+        taskManager.addSubTask(new Subtask("Купить сыр", "Купить сыр", taskManager.getEpicId(3)));
+        taskManager.addSubTask(new Subtask("Купить роял", "Купить роял", taskManager.getEpicId(4)));
         System.out.println("Список ModelTask.Task:");
         System.out.println(taskManager.getTasks());
         System.out.println("Список ModelTask.Epic:");
@@ -48,5 +49,7 @@ public class Main {
         System.out.println("Список ModelTask.Subtask:");
         System.out.println(taskManager.getSubTasks());
         System.out.println();
+        System.out.println("Вывод истории:");
+        System.out.println(taskManager.getHistory());
     }
 }
