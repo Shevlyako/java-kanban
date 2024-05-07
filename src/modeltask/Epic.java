@@ -1,10 +1,11 @@
-package ModelTask;
+package modeltask;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Epic extends Task {
-    private ArrayList<Integer> subTasksId = new ArrayList<>();
+    private List<Integer> subTasksId = new ArrayList<>();
 
     public Epic(String name, String description) {
         super(name, description);

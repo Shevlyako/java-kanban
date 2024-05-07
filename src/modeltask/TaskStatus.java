@@ -1,4 +1,4 @@
-package ModelTask;
+package modeltask;
 
 public enum TaskStatus {
     NEW,

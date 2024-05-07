@@ -1,31 +1,38 @@
-package Manager;
+package manager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
-import ModelTask.*;
+import modeltask.*;
 
 public class InMemoryTaskManager implements TaskManager {
-    private final HashMap<Integer, Task> tasks = new HashMap<>();
-    private final HashMap<Integer, Subtask> subTasks = new HashMap<>();
-    private final HashMap<Integer, Epic> epics = new HashMap<>();
-    private final HistoryManager historyManager = Managers.getDefaultHistory();
-    private static int id = 0;
+    private final Map<Integer, Task> tasks = new HashMap<>();
+    private final Map<Integer, Subtask> subTasks = new HashMap<>();
+    private final Map<Integer, Epic> epics = new HashMap<>();
+    private final HistoryManager historyManager; /*А как данная реализация может быть полезна.
+                                                   в каких случаях мы можем туда передать заполненную историю?
+                                                   не понятен просто этот момент*/
+    private static int id = 1;
 
-    static int getId() { //Счетчик тасок
-        return InMemoryTaskManager.id = InMemoryTaskManager.id + 1;
+    public InMemoryTaskManager(HistoryManager historyManager) {
+        this.historyManager = historyManager;
+    }
+
+    private int getNewId() { //Счетчик тасок
+        return id++;
     }
 
     @Override
     public Task addTask(Task newTask) { //Добавляем таску
-        newTask.setId(getId());
+        newTask.setId(getNewId());
         tasks.put(newTask.getId(), newTask);
         return newTask;
     }
 
     @Override
     public Subtask addSubTask(Subtask newSubtask) { //Добавляем субтаску
-        newSubtask.setId(getId());
+        newSubtask.setId(getNewId());
         subTasks.put(newSubtask.getId(), newSubtask);
         Epic epic = (Epic) epics.get(newSubtask.getEpicId());
         if (epic != null) {
@@ -36,7 +43,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public Epic addEpic(Epic newEpic) { //Добавляем эпик
-        newEpic.setId(getId());
+        newEpic.setId(getNewId());
         epics.put(newEpic.getId(), newEpic);
         return newEpic;
     }

@@ -1,12 +1,9 @@
-package Test;
+package test;
 
-import ModelTask.Epic;
-import ModelTask.Subtask;
-import ModelTask.Task;
+import modeltask.Epic;
+import modeltask.Subtask;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class SubtaskTest {
     @Test
