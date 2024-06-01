@@ -55,4 +55,24 @@ class InMemoryTaskManagerTest {
         taskManager.addTask(task);
         assertEquals(task, taskManager.getTaskId(1));
     }
+
+    @Test
+    public void checDeleteSubtaskHisDeleteByEpic(){ //Проверяем что при удалении сабтаски её id удаляется из эпик
+        Epic epic = new Epic("1", "");
+        taskManager.addEpic(epic);
+        Subtask subtask = new Subtask("1", "", epic);
+        taskManager.addSubTask(subtask);
+        taskManager.removeSubtask(subtask.getId());
+        Subtask subtask2 = new Subtask("2", "", epic);
+        taskManager.addSubTask(subtask2);
+        assertNotEquals(epic.getSubTasks().get(0), subtask);
+    }
+
+    @Test
+    public void checInfluenceSetterByManage(){ //Проверяем влияние сеттеров на менеджер
+            Task task = new Task("1", "");
+            taskManager.addTask(task);
+            task.setName("2");
+            assertEquals(task, taskManager.getTaskId(1));
+    }
 }

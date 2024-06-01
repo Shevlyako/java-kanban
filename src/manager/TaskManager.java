@@ -5,6 +5,7 @@ import modeltask.Subtask;
 import modeltask.Task;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface TaskManager {
     Task addTask(Task newTask);
@@ -44,5 +45,5 @@ public interface TaskManager {
     void updateEpic(Epic epic);
 
     void updateSubTask(Subtask subtask);
-    ArrayList<Task> getHistory();
+    List<Task> getHistory();
 }
