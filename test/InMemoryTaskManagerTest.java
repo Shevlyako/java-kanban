@@ -5,6 +5,7 @@ import manager.TaskManager;
 import modeltask.Epic;
 import modeltask.Subtask;
 import modeltask.Task;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,7 +17,7 @@ class InMemoryTaskManagerTest {
     TaskManager taskManager;
 
     @BeforeEach
-    public void beforEach() { //Перед каждым тестом создаем новый пустой taskManager
+    public void beforeEachTaskManager() {
         taskManager = Managers.getDefault();
     }
 
@@ -75,6 +76,6 @@ class InMemoryTaskManagerTest {
         Task task = new Task("1", "");
         taskManager.addTask(task);
         task.setName("2");
-        assertEquals(task, taskManager.getTaskId(1));
+        assertEquals(task, taskManager.getTaskId(task.getId()));
     }
 }

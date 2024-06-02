@@ -23,7 +23,7 @@ class InMemoryHistoryManagerTest {
         task.setName("2");
         taskManager.updateTask(task);
         taskManager.getTaskId(task.getId());
-        Assertions.assertEquals(taskManager.getHistory().get(task.getId()).getName(), task.getName());
+        Assertions.assertEquals(taskManager.getHistory().get(0).getName(), task.getName());
     }
 
     @Test
