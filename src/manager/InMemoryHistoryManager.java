@@ -56,8 +56,8 @@ public class InMemoryHistoryManager implements HistoryManager {
     }
 
     //Удаление элемента связанного списка
-    private void removeNode(Node<Task> node){
-        if(node != null) {
+    private void removeNode(Node<Task> node) {
+        if (node != null) {
             final Node<Task> next = node.next;
             final Node<Task> prev = node.prev;
             node.data = null;

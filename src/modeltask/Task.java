@@ -13,7 +13,7 @@ public class Task {
         this.description = description;
     }
 
-    public Task(Task task){
+    public Task(Task task) {
         this.name = task.name;
         this.description = task.description;
         this.id = task.id;

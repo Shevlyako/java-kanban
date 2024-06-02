@@ -1,7 +1,6 @@
 package manager;
 
 import modeltask.Task;
-
 import java.util.List;
 
 public interface HistoryManager {

@@ -12,7 +12,7 @@ public class Epic extends Task {
     }
 
     public void addSubInEpic(Subtask subtask) {
-            subTasksId.add(subtask.getId());
+        subTasksId.add(subtask.getId());
     }
 
     public ArrayList<Integer> getSubTasks() {

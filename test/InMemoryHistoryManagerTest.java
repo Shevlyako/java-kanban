@@ -11,12 +11,12 @@ class InMemoryHistoryManagerTest {
     TaskManager taskManager;
 
     @BeforeEach
-    public void beforEach(){
+    public void beforEach() {
         taskManager = Managers.getDefault();
     }
 
     @Test
-    public void checWhatOldVersionTaskDeleteToNewViewing(){ //Проверяем что при просмотре новой версии старая удаляется
+    public void checWhatOldVersionTaskDeleteToNewViewing() { //Проверяем что при просмотре новой версии старая удаляется
         Task task = new Task("1", "");
         taskManager.addTask(task);
         taskManager.getTaskId(task.getId());
@@ -27,7 +27,7 @@ class InMemoryHistoryManagerTest {
     }
 
     @Test
-    public void checWhatByDeleteTaskAndDeleteFromHistory(){ // проверяем что при удалении задачи она удаляется из истории
+    public void checWhatByDeleteTaskAndDeleteFromHistory() { // проверяем что при удалении задачи она удаляется из истории
         Task task = new Task("1", "");
         taskManager.addTask(task);
         taskManager.getTaskId(task.getId());
@@ -39,7 +39,7 @@ class InMemoryHistoryManagerTest {
     }
 
     @Test
-    public void checWhatTaskAddToHistory(){ // проверяем что при удалении задачи она удаляется из истории
+    public void checWhatTaskAddToHistory() { // проверяем что при удалении задачи она удаляется из истории
         Task task = new Task("1", "");
         taskManager.addTask(task);
         taskManager.getTaskId(task.getId());
