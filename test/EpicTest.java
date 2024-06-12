@@ -1,5 +1,4 @@
-package test; /*Папка с тестами должна быть в папке src иначе тесты не запускаются или я не прав?
-              Я вынес папку выше и тесты перестали запускаться*/
+package test;
 
 import modeltask.Epic;
 import org.junit.jupiter.api.Assertions;
