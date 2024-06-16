@@ -55,7 +55,7 @@ class InMemoryTaskManagerTest {
     public void checDontUpdateFieldsByAddManager() { //Проверяем что при добавление в мэнеджер таска не меняется
         Task task = new Task("1", "");
         taskManager.addTask(task);
-        assertEquals(task, taskManager.getTaskId(1));
+        assertEquals(task, taskManager.getTaskId(task.getId()));
     }
 
     @Test
