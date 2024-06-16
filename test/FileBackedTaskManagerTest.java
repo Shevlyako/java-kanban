@@ -22,7 +22,7 @@ public class FileBackedTaskManagerTest {
             File file = File.createTempFile("test", "csv");
             FileBackedTaskManager fileManager = new FileBackedTaskManager(file);
 
-            String[] lines = Files.readString(file.toPath()).split(lineSeparator);
+            String[] lines = Files.readString(file.toPath()).split("\n");
             Assertions.assertEquals(lines.length, 1, "Ошибка загрузки пустого файла");
             Assertions.assertEquals(lines[0], title, "Первая строка не титульная");
         } catch (IOException e) {

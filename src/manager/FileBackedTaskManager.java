@@ -6,7 +6,9 @@ import modeltask.Subtask;
 import modeltask.Task;
 import modeltask.TaskStatus;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -120,47 +122,21 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         String fileName = "fileTaskManager.csv";
         try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(file.toURI()), StandardCharsets.UTF_8)) {
             writer.write(title);
-            writer.newLine();
+            writer.write("\n");
             for (Task pair : tasks.values()) {
                 writer.write(toString(pair));
-                writer.newLine();
+                writer.write("\n");
             }
             for (Subtask pair : subTasks.values()) {
                 writer.write(toString(pair));
-                writer.newLine();
+                writer.write("\n");
             }
             for (Epic pair : epics.values()) {
                 writer.write(toString(pair));
-                writer.newLine();
+                writer.write("\n");
             }
         } catch (IOException e) {
             throw new ManagerSaveException("Не удалось сохранит данные " + "\n ошибка", e.getCause());
-        }
-    }
-
-    public void loadFromFile() {
-
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file, StandardCharsets.UTF_8))) {
-
-            String line = bufferedReader.readLine();
-            while (bufferedReader.ready()) {
-                line = bufferedReader.readLine();
-                if (line.equals("")) {
-                    break;
-                }
-
-                Task task = fromString(line);
-
-                if (task instanceof Epic epic) {
-                    addEpic(epic);
-                } else if (task instanceof Subtask subtask) {
-                    addSubTask(subtask);
-                } else {
-                    addTask(task);
-                }
-            }
-        } catch (IOException e) {
-            throw new ManagerSaveException("Произошла ошибка во время чтения файла!");
         }
     }
 
@@ -225,8 +201,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
     public static FileBackedTaskManager loadFromFile(File file) {
         try {
-            String lineSeparator = System.lineSeparator();
-            String[] lines = Files.readString(file.toPath()).split(lineSeparator);
+            String[] lines = Files.readString(file.toPath()).split("\n");
             FileBackedTaskManager fileBackedTaskManager = new FileBackedTaskManager(file);
 
 
