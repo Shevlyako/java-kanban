@@ -26,7 +26,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
     @Override
     public Task addTask(Task newTask) {
-        if(newTask != null) {
+        if (newTask != null) {
             Task task1 = super.addTask(newTask);
             save();
             return task1;
@@ -37,7 +37,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
     @Override
     public Epic addEpic(Epic newEpic) {
-        if(newEpic != null) {
+        if (newEpic != null) {
             Epic epic1 = super.addEpic(newEpic);
             save();
             return epic1;
