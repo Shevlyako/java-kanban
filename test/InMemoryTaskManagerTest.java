@@ -5,7 +5,6 @@ import manager.TaskManager;
 import modeltask.Epic;
 import modeltask.Subtask;
 import modeltask.Task;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -56,7 +55,7 @@ class InMemoryTaskManagerTest {
     public void checDontUpdateFieldsByAddManager() { //Проверяем что при добавление в мэнеджер таска не меняется
         Task task = new Task("1", "");
         taskManager.addTask(task);
-        assertEquals(task, taskManager.getTaskId(1));
+        assertEquals(task, taskManager.getTaskId(task.getId()));
     }
 
     @Test
