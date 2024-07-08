@@ -12,12 +12,15 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 public class FileBackedTaskManager extends InMemoryTaskManager {
 
     private final File file;
-    static String title = "id,type,name,status,description,epic";
+    static String title = "id,type,name,status,description,epic, startTime, duration, endTime";
 
     public FileBackedTaskManager(File file) {
         this.file = file;
@@ -129,6 +132,11 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         return super.getSubTasks();
     }
 
+    @Override
+    public List<Subtask> getSubtasksEpic(Integer id) {
+        return super.getSubtasksEpic(id);
+    }
+
 
     public void save() {
         String fileName = "fileTaskManager.csv";
@@ -164,11 +172,13 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
     private String toString(Task task) {
         String[] valueTask = new String[6];
         if (task instanceof Subtask) {
-            valueTask = new String[]{Integer.toString(task.getId()), getType(task).toString(), task.getName(), task.getStatus().toString(),
-                    task.getDescription(), Integer.toString(((Subtask) task).getEpicId())};
+            valueTask = new String[]{Integer.toString(task.getId()), getType(task).toString(), task.getName(),
+                    task.getStatus().toString(), task.getDescription(), Integer.toString(((Subtask) task).getEpicId()),
+                    String.valueOf(task.getStartTime()), String.valueOf(task.getDuration()), String.valueOf(task.getEndTime())};
         } else {
-            valueTask = new String[]{Integer.toString(task.getId()), getType(task).toString(), task.getName(), task.getStatus().toString(),
-                    task.getDescription()};
+            valueTask = new String[]{Integer.toString(task.getId()), getType(task).toString(), task.getName(),
+                    task.getStatus().toString(), task.getDescription(), String.valueOf(task.getStartTime()),
+                    String.valueOf(task.getDuration()), String.valueOf(task.getEndTime())};
         }
         return String.join(",", valueTask);
     }
@@ -181,20 +191,28 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         TaskStatus taskStatus = TaskStatus.valueOf(splitValue[3]);
         String description = splitValue[4];
         Task task = null;
-        if (splitValue.length == 6) {
+        if (splitValue.length == 9) {
             int epicId = Integer.parseInt(splitValue[5]);
-            task = new Subtask(name, description, epicId);
+            LocalDateTime startTime = LocalDateTime.parse(splitValue[6]);
+            Duration duration = Duration.parse(splitValue[7]);
+            task = new Subtask(name, description, duration, startTime, epicId);
             task.setId(id);
             task.setStatus(taskStatus);
             return task;
         } else {
             if (taskType == TaskType.TASK) {
-                task = new Task(name, description);
+                LocalDateTime startTime = LocalDateTime.parse(splitValue[5]);
+                Duration duration = Duration.parse(splitValue[6]);
+                task = new Task(name, description, duration, startTime);
                 task.setId(id);
                 task.setStatus(taskStatus);
                 return task;
             } else {
+                LocalDateTime startTime = LocalDateTime.parse(splitValue[5]);
+                Duration duration = Duration.parse(splitValue[6]);
                 task = new Epic(name, description);
+                task.setStartTime(startTime);
+                task.setDuration(duration);
                 task.setId(id);
                 task.setStatus(taskStatus);
                 return task;
@@ -215,15 +233,12 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         try {
             String[] lines = Files.readString(file.toPath()).split("\n");
             FileBackedTaskManager fileBackedTaskManager = new FileBackedTaskManager(file);
-
-
             for (String taskString : lines) {
                 if (taskString.equals(title) || taskString.isBlank()) {
                     continue;
                 }
                 Task task = fromString(taskString);
                 TaskType typeOfTask = toEnum(task);
-
                 switch (typeOfTask) {
                     case TASK -> fileBackedTaskManager.addTask(task);
                     case EPIC -> fileBackedTaskManager.addEpic((Epic) task);

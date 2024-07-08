@@ -7,6 +7,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+
 class InMemoryHistoryManagerTest {
     TaskManager taskManager;
 
@@ -17,7 +20,7 @@ class InMemoryHistoryManagerTest {
 
     @Test
     public void checWhatOldVersionTaskDeleteToNewViewing() { //Проверяем что при просмотре новой версии старая удаляется
-        Task task = new Task("1", "");
+        Task task = new Task("1", "", Duration.ofMinutes(2), LocalDateTime.now());
         taskManager.addTask(task);
         taskManager.getTaskId(task.getId());
         task.setName("2");
@@ -28,10 +31,10 @@ class InMemoryHistoryManagerTest {
 
     @Test
     public void checWhatByDeleteTaskAndDeleteFromHistory() { // проверяем что при удалении задачи она удаляется из истории
-        Task task = new Task("1", "");
+        Task task = new Task("1", "", Duration.ofMinutes(2), LocalDateTime.now());
         taskManager.addTask(task);
         taskManager.getTaskId(task.getId());
-        Task task2 = new Task("2", "");
+        Task task2 = new Task("2", "", Duration.ofMinutes(2), LocalDateTime.now().plusHours(1));
         taskManager.addTask(task2);
         taskManager.getTaskId(task2.getId());
         taskManager.removeTask(task.getId());
@@ -40,7 +43,7 @@ class InMemoryHistoryManagerTest {
 
     @Test
     public void checWhatTaskAddToHistory() { // проверяем что при удалении задачи она удаляется из истории
-        Task task = new Task("1", "");
+        Task task = new Task("1", "", Duration.ofMinutes(2), LocalDateTime.now().plusHours(1));
         taskManager.addTask(task);
         taskManager.getTaskId(task.getId());
         Assertions.assertEquals(taskManager.getHistory().get(0), task);
