@@ -38,7 +38,7 @@ public interface TaskManager {
 
     Epic getEpicId(int id);
 
-    public List<Subtask> getSubtasksEpic(Integer id);
+    List<Subtask> getSubtasksEpic(Integer id);
 
     void updateTask(Task task);
 
@@ -48,7 +48,7 @@ public interface TaskManager {
 
     void updateSubTask(Subtask subtask);
 
-    public List<Task> getPrioritizedTasks();
+    List<Task> getPrioritizedTasks();
 
     List<Task> getHistory();
 }

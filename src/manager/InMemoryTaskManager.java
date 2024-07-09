@@ -288,7 +288,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     //метод для проверки пересечения задач
-    public boolean timeConflict(Task newTask) {
+    private boolean timeConflict(Task newTask) {
         List<Task> sortTask = getPrioritizedTasks();
         return sortTask.stream()
                 .anyMatch(existingTask -> !existingTask.getEndTime().isBefore(newTask.getStartTime()) &&
