@@ -4,6 +4,8 @@ import modeltask.Subtask;
 import modeltask.Task;
 
 import java.io.File;
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 public class Main {
 
@@ -12,15 +14,15 @@ public class Main {
 
         FileBackedTaskManager fileManager1 = new FileBackedTaskManager(fileTest);
 
-        Task task1 = new Task("Задача 1", "Описание 1");
+        Task task1 = new Task("Задача 1", "Описание 1", Duration.ofMinutes(2), LocalDateTime.now());
         fileManager1.addTask(task1);
-        Task task2 = new Task("Задача 2", "Описание 2");
+        Task task2 = new Task("Задача 2", "Описание 2", Duration.ofMinutes(2), LocalDateTime.now().plusHours(1));
         fileManager1.addTask(task2);
 
         Epic epic1 = new Epic("Эпик1", "Описание 1");
         fileManager1.addEpic(epic1);
-        Subtask subtask1 = new Subtask("Подзадача 1", "...", epic1);
-        Subtask subtask2 = new Subtask("Подзадача 2", "...", epic1);
+        Subtask subtask1 = new Subtask("Подзадача 1", "...", Duration.ofMinutes(2), LocalDateTime.now().plusHours(2), epic1);
+        Subtask subtask2 = new Subtask("Подзадача 2", "...", Duration.ofMinutes(2), LocalDateTime.now().plusHours(3), epic1);
         fileManager1.addSubTask(subtask1);
         fileManager1.addSubTask(subtask2);
 
