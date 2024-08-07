@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="java-kanban">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$" />
+      <root url="jar://$USER_HOME$/m1-t25-api/lib/gson-2.9.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$" />
+      <root url="file://$PROJECT_DIR$/src" />
+    </SOURCES>
+  </library>
+</component>
